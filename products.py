@@ -17,7 +17,7 @@ class Product:
         self.active = True
 
 
-    def get_quantity(self):
+    def get_quantity(self) -> int:
         return self.quantity
 
 
@@ -26,7 +26,7 @@ class Product:
             self.deactivate()
         self.quantity = self.quantity + quantity
 
-    def is_active(self):
+    def is_active(self) -> bool:
         return self.active
 
     def activate(self):
@@ -38,7 +38,7 @@ class Product:
     def show(self):
         print(f"{self.name}, Price: {self.price}, Quantity: {self.quantity}")
 
-    def buy(self, quantity): # quantity parameter represents the buying items from the client
+    def buy(self, quantity: int) -> float: # quantity parameter represents the buying items from the client
         if quantity > self.quantity:
             raise ValueError("We cant cover this buying quantity.")
         self.quantity -= quantity
@@ -47,15 +47,3 @@ class Product:
         return self.quantity * self.price
 
 
-bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-mac = Product("MacBook Air M2", price=1450, quantity=100)
-
-print(bose.buy(50))#
-print(mac.buy(100))
-print(mac.is_active())
-
-bose.show()
-mac.show()
-
-bose.set_quantity(1000)
-bose.show()
