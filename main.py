@@ -3,6 +3,18 @@ from store import Store
 
 
 def list_products(store_obj):
+    """
+    Display all active products available in the store.
+
+    Retrieves all active products from the store and prints them
+    in a numbered list format.
+
+    Args:
+        store_obj (Store): The store instance containing products.
+
+    Returns:
+        None
+    """
     products_list = store_obj.get_all_products()
     print('----------------------------')
     for index, product in enumerate(products_list, start=1):
@@ -12,11 +24,41 @@ def list_products(store_obj):
 
 
 def show_total(store_obj):
+    """
+    Display the total quantity of all products in the store.
+
+    Calculates and prints the total number of items across
+    all products in inventory.
+
+    Args:
+        store_obj (Store): The store instance containing products.
+
+    Returns:
+        None
+    """
     total = store_obj.get_total_quantity()
     print(f'\nTotal of {total} items in store')
 
 
 def make_order(store_obj):
+    """
+    Handle the process of creating a customer order.
+
+    Allows the user to select products and quantities,
+    builds a shopping list, and processes the order
+    through the store system.
+
+    Args:
+        store_obj (Store): The store instance used for ordering.
+
+    Returns:
+        None
+
+    Side Effects:
+        - Prompts user input repeatedly.
+        - Displays order summary or error messages.
+        - Updates product stock via Store.order().
+    """
     products_list = store_obj.get_all_products()
 
     list_products(store_obj)
@@ -44,6 +86,23 @@ def make_order(store_obj):
 
 
 def add_product(store_obj):
+    """
+    Add a new product to the store inventory.
+
+    Prompts the user for product details, creates a Product
+    object, and adds it to the store.
+
+    Args:
+        store_obj (Store): The store instance where the product is added.
+
+    Returns:
+        None
+
+    Side Effects:
+        - Prompts user input.
+        - Adds a product to store inventory.
+        - Prints success or error messages.
+    """
     try:
         name = input("Product name: ")
         price = float(input("Price per unit: "))
@@ -59,6 +118,22 @@ def add_product(store_obj):
 
 
 def start(store_obj):
+    """
+    Run the main menu loop for the store application.
+
+    Displays available actions and routes user input to
+    the corresponding function until the user exits.
+
+    Args:
+        store_obj (Store): The store instance used throughout the session.
+
+    Returns:
+        None
+
+    Side Effects:
+        - Runs an interactive command-line menu.
+        - Calls store operations based on user input.
+    """
     menu = {
         '1': list_products,
         '2': show_total,
@@ -84,6 +159,15 @@ def start(store_obj):
 
 
 def main():
+    """
+    Entry point for the store application.
+
+    Initializes the product inventory, creates a Store instance,
+    and starts the interactive menu system.
+
+    Returns:
+        None
+    """
     # setup initial stock of inventory
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250,
@@ -92,6 +176,7 @@ def main():
                     ]
     best_buy = Store(product_list)
     start(best_buy)
+
 
 if __name__ == "__main__":
     main()
