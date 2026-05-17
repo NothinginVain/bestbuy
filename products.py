@@ -22,9 +22,10 @@ class Product:
 
 
     def set_quantity(self, quantity):
-        if quantity == 0:
+        self.quantity = quantity
+        if self.quantity == 0:
             self.deactivate()
-        self.quantity = self.quantity + quantity
+
 
     def is_active(self) -> bool:
         return self.active
@@ -41,9 +42,11 @@ class Product:
     def buy(self, quantity: int) -> float: # quantity parameter represents the buying items from the client
         if quantity > self.quantity:
             raise ValueError("We cant cover this buying quantity.")
+        if quantity <= 0:
+            raise ValueError("Please type positive number!")
         self.quantity -= quantity
         if self.quantity == 0:
             self.deactivate()
-        return self.quantity * self.price
+        return quantity * self.price
 
 
