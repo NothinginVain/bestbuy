@@ -31,24 +31,46 @@ def make_order(store_obj):
 
     while True:
         print('When you want to finish order, enter empty text.')
-        product_pick = input('Which product # do you want? ')
+        product_pick = input('Which product # do you want? ').strip()
         if not product_pick:
             break
-        selected_product = products_list[int(product_pick)-1]
-        quantity_buy = int(input('What amount do you want? '))
-        shopping_list.append((selected_product, quantity_buy))
-        print('Product added to list!\n')
+        try:
+            selected_product = products_list[int(product_pick)-1]
+            quantity_buy = int(input('What amount do you want? '))
+            shopping_list.append((selected_product, quantity_buy))
+            print('Product added to list!\n')
+        except ValueError, IndexError:
+            print("Type the right input please")
+    try:
+        total_price = store_obj.order(shopping_list)
+        print('**********')
+        print(f'Order made! Total payment: €{total_price}')
+    except ValueError as error:
+        print(f'Error while making order! {error}')
 
-    total_price = store_obj.order(shopping_list)
-    print('**********')
-    print(f'Order made! Total payment: €{total_price}')
+
+def add_product(store_obj):
+    try:
+        name = input("Product name: ")
+        price = float(input("Price per unit: "))
+        quantity = int(input("Quantity: "))
+
+        new_product = Product(name, price, quantity)
+
+        store_obj.add_product(new_product)
+        print(f'{name} added with success!')
+
+    except ValueError as error:
+        print(f'Could not create product: {error}')
+
 
 
 def star(store_obj):
     menu = {
         '1': list_products,
         '2': show_total,
-        '3': make_order
+        '3': make_order,
+        '4': add_product
     }
     while True:
         print("\n   Store Menu")
@@ -56,11 +78,12 @@ def star(store_obj):
         print("1. List all products in store")
         print("2. Show total amount in store")
         print("3. Make an order")
-        print("4. Quit")
+        print("4. Add a new product")
+        print("5. Quit")
 
         choice = input("\nPlease choose a number: ")
 
-        if choice == '4':
+        if choice == '5':
             print('Goodbye!')
             break
 
